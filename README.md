@@ -40,4 +40,4 @@ If you find this work useful in your research, please consider citing:
 ```
 
 ## Contact
-If you have any questions, please contact Rundong Luo [rundongluo2002@gmail.com](mailto:rundongluo2002@gmail.com)
+If you have any questions, please contact Rundong Luo [(rundongluo2002@gmail.com)](mailto:rundongluo2002@gmail.com)
