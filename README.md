@@ -27,3 +27,17 @@ Low-light conditions not only hamper human visual experience but also degrade th
 
 ## Code
 Coming soon.
+
+## Citation
+If you find this work useful in your research, please consider citing:
+```
+@inproceedings{luo2023similarity,
+  title={Similarity Min-Max: Zero-Shot Day-Night Domain Adaptation},
+  author={Luo, Rundong and Wang, Wenjing and Yang, Wenhan and Liu, Jiaying},
+  booktitle={ICCV},
+  year={2023}
+}
+```
+
+## Contact
+If you have any questions, please contact Rundong Luo [rundongluo2002@gmail.com](mailto:rundongluo2002@gmail.com)
