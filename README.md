@@ -18,7 +18,7 @@
 
 This the official repository of the paper **Similarity Min-Max: Zero-Shot Day-Night Domain Adaptation**.
 
-For more information, please visit our [project website](https://github.com/Red-Fairy/ZeroShotDayNightDA).
+For more information, please visit our [project website](https://red-fairy.github.io/ZeroShotDayNightDA-Webpage/).
 
 Authors: Rundong Luo, Wenjing Wang, Wenhan Yang, Jiaying Liu
 
