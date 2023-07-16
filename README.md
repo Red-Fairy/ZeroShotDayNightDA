@@ -6,11 +6,13 @@
 
 <div align="center">
     <a href="https://github.com/Red-Fairy/ZeroShotDayNightDA" target="_blank">
-    <img src="https://img.shields.io/badge/ICCV 2023-Conference Paper-red"></a>
+    <img src="https://img.shields.io/badge/ICCV 2023-red"></a>
     <a href="https://red-fairy.github.io/ZeroShotDayNightDA-Webpage/paper.pdf" target="_blank">
-    <img src="https://img.shields.io/badge/Paper-arXiv-green" alt="Paper arXiv"></a>
+    <img src="https://img.shields.io/badge/Paper-green" alt="paper"></a>
+    <a href="https://red-fairy.github.io/ZeroShotDayNightDA-Webpage/supp.pdf" target="_blank">
+    <img src="https://img.shields.io/badge/Supplementary-green" alt="supp"></a>
     <a href="https://red-fairy.github.io/ZeroShotDayNightDA-Webpage/" target="_blank">
-    <img src="https://img.shields.io/badge/Website-Project Page-blue" alt="Project Page"/></a>
+    <img src="https://img.shields.io/badge/Project Page-blue" alt="Project Page"/></a>
 </div>
 </h2>
 
