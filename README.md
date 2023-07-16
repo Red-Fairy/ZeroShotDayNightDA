@@ -5,12 +5,12 @@
 
 
 <div align="center">
-    <a href="https://cvpr.thecvf.com/virtual/2023/poster/22552" target="_blank">
+    <a href="https://github.com/Red-Fairy/ZeroShotDayNightDA" target="_blank">
     <img src="https://img.shields.io/badge/ICCV 2023-Conference Paper-red"></a>
-    <a href="" target="_blank">
+    <a href="https://red-fairy.github.io/ZeroShotDayNightDA-Webpage/paper.pdf" target="_blank">
     <img src="https://img.shields.io/badge/Paper-arXiv-green" alt="Paper arXiv"></a>
-    <!-- <a href="https://pku-epic.github.io/GAPartNet/" target="_blank">
-    <img src="https://img.shields.io/badge/Page-GAPartNet-blue" alt="Project Page"/></a> -->
+    <a href="https://red-fairy.github.io/ZeroShotDayNightDA-Webpage/" target="_blank">
+    <img src="https://img.shields.io/badge/Website-Project Page-blue" alt="Project Page"/></a>
 </div>
 </h2>
 
