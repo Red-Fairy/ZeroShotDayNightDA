@@ -7,7 +7,7 @@
 <div align="center">
     <a href="https://github.com/Red-Fairy/ZeroShotDayNightDA" target="_blank">
     <img src="https://img.shields.io/badge/ICCV 2023-red"></a>
-    <a href="https://red-fairy.github.io/ZeroShotDayNightDA-Webpage/paper.pdf" target="_blank">
+    <a href="https://arxiv.org/abs/2307.08779" target="_blank">
     <img src="https://img.shields.io/badge/Paper-orange" alt="paper"></a>
     <a href="https://red-fairy.github.io/ZeroShotDayNightDA-Webpage/supp.pdf" target="_blank">
     <img src="https://img.shields.io/badge/Supplementary-green" alt="supp"></a>
