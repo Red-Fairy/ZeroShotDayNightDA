@@ -23,6 +23,7 @@ This the official repository of the paper **Similarity Min-Max: Zero-Shot Day-Ni
 For more information, please visit our [project website](https://red-fairy.github.io/ZeroShotDayNightDA-Webpage/).
 
 **Authors:** Rundong Luo<sup>1</sup>, Wenjing Wang<sup>1</sup>, Wenhan Yang<sup>2</sup>, Jiaying Liu<sup>1</sup>
+
 <sup>1</sup>Peking University, <sup>2</sup>Peng Cheng Laboratory
 
 ## Abstract
