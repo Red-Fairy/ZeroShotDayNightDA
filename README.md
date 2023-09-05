@@ -36,8 +36,9 @@ Low-light conditions not only hamper human visual experience but also degrade th
 Code for image classification and semantic segmentation is available now. Code for visual place recognition and video action recognition will be released soon. 
 
 ### Requirements
-Environment: Pytorch with version >= 1.11.0 is required. Other requirements can be easily satisfied using `pip install`.
-GPU: 3 GPUs with at least 12GB memory (e.g., 2080Ti) are required.
+**Environment**: Pytorch with version >= 1.11.0 is required. Other requirements can be easily satisfied using `pip install`.
+
+**GPU**: 3 GPUs with at least 12GB memory (e.g., 2080Ti) are required.
 
 ### Image Classification
 #### Dataset Preparation
@@ -50,7 +51,7 @@ Download the [CODaN dataset](https://github.com/Attila94/CIConv) and put it unde
 
 ### Semantic Segmentation
 #### Dataset Preparation
-Download the [Cityscapes dataset](https://www.cityscapes-dataset.com/), [Nighttime Driving dataset](http://people.ee.ethz.ch/~daid/NightDriving/#), and [Dark Zurich dataset](https://www.trace.ethz.ch/publications/2019/GCMA_UIoU/). Put them under `./segmentation/data/`.
+We need three dataset for training and evaluation: [Cityscapes](https://www.cityscapes-dataset.com/), [Nighttime Driving](http://people.ee.ethz.ch/~daid/NightDriving/#), and [Dark Zurich dataset](https://www.trace.ethz.ch/publications/2019/GCMA_UIoU/). Download and put them under `./segmentation/data/`.
 
 #### Training
 - Navigate to `./darkening`, run `python darken_segmentation.py --sim` to train the darkening model with the $\mathcal{L}_D^{sim}$. Specify the pre-trained daytime model path with `--sim_model_dir`, the logging directory by `--experiment`, and models will be saved under `./darkening/checkpoints/{args.experiment}`.
@@ -58,7 +59,7 @@ Download the [Cityscapes dataset](https://www.cityscapes-dataset.com/), [Nightti
 - Navigate to `./segmentation`, run `python train.py`. Specify the darkened dataset by `darken_dataset` and the logging directory by `--experiment`. Model checkpoints and loggers will be saved under `./segmentation/runs/{args.experiment}`.
 - Segmentation results will be saved in `./segmentation/runs/{args.experiment}/logs/`. You may also run ``python eval_test.py`` to obtain the visualization results and the zipped file for Dark Zurich evaluation.
 
-#### Pre-trained Models
+### Pre-trained Models
 We provide the pre-trained models for image classification and semantic segmentation. You may download them [here](https://disk.pku.edu.cn:443/link/D12F2FAC207A60F4AB94197432B1032C).
 
 ## Citation
