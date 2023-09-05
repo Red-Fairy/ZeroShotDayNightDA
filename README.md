@@ -51,12 +51,12 @@ Download the [CODaN dataset](https://github.com/Attila94/CIConv) and put it unde
 
 ### Semantic Segmentation
 #### Dataset Preparation
-We need three dataset for training and evaluation: [Cityscapes](https://www.cityscapes-dataset.com/), [Nighttime Driving](http://people.ee.ethz.ch/~daid/NightDriving/#), and [Dark Zurich dataset](https://www.trace.ethz.ch/publications/2019/GCMA_UIoU/). Download and put them under `./segmentation/data/`.
+We need three dataset for training and evaluation: [Cityscapes](https://www.cityscapes-dataset.com/), [Nighttime Driving](http://people.ee.ethz.ch/~daid/NightDriving/#), and [Dark Zurich](https://www.trace.ethz.ch/publications/2019/GCMA_UIoU/). Download and put them under `./segmentation/data/`.
 
 #### Training
 - Navigate to `./darkening`, run `python darken_segmentation.py --sim` to train the darkening model with the $\mathcal{L}_D^{sim}$. Specify the pre-trained daytime model path with `--sim_model_dir`, the logging directory by `--experiment`, and models will be saved under `./darkening/checkpoints/{args.experiment}`.
 - To save GPU memory, our implementation generates the darkened nighttime dataset in advance. Run python `darken_test.py` and specify the source daytime dataset path with `--src_path`, the darkening model path with `--experiment`, and the target nighttime dataset path with `--output_dir`. The darkened nighttime dataset will be saved under `--dst_path`. You may also download our pre-generated darkened nighttime dataset [here](https://disk.pku.edu.cn:443/link/6B3418BCC0876977E2A4A56CA5568C78).
-- Navigate to `./segmentation`, run `python train.py`. Specify the darkened dataset by `darken_dataset` and the logging directory by `--experiment`. Model checkpoints and loggers will be saved under `./segmentation/runs/{args.experiment}`.
+- Navigate to `./segmentation`, run `python train.py`. Specify the darkened dataset by `--darken_dataset` and the logging directory by `--experiment`. Model checkpoints and loggers will be saved under `./segmentation/runs/{args.experiment}`.
 - Segmentation results will be saved in `./segmentation/runs/{args.experiment}/logs/`. You may also run ``python eval_test.py`` to obtain the visualization results and the zipped file for Dark Zurich evaluation.
 
 ### Pre-trained Models
