@@ -31,6 +31,7 @@ Low-light conditions not only hamper human visual experience but also degrade th
 
 ## Updates
 - 09/06/2023: Code for image classification and semantic segmentation is available now.
+- 10/18/2023: Code for visual place recognition is available now.
 
 ## Code
 Code for image classification and semantic segmentation is available now. Code for visual place recognition and video action recognition will be released soon. 
@@ -44,7 +45,7 @@ GPU: 3 GPUs with at least 12GB memory (e.g., 2080Ti) are required.
 Download the [CODaN dataset](https://github.com/Attila94/CIConv) and put it under `./classification/data/`.
 
 #### Training
-- Navigate to `./darkening`, run `python darken_classification.py --sim` to train the darkening model with the $\mathcal{L}_D^{sim}$. Specify the pre-trained daytime model path with `--sim_model_dir`. Specify the logging directory by `--experiment`, and models will be saved under `./darkening/checkpoints/{args.experiment}`.
+- Navigate to `./darkening`, run `python darken_classification.py --sim --experiment EXPERIMENT_NAME` to train the darkening model with the $\mathcal{L}_D^{sim}$. Specify the pre-trained daytime model path with `--sim_model_dir`. Specify the logging directory by `--experiment`, and models will be saved under `./darkening/checkpoints/{args.experiment}`.
 - Navigate to `./classification`, run `python train.py --use_BYOL` using the BYOL loss ($\mathcal{L}_F^{sim}$). Specify the pre-trained darkening model path with `--darkening_model`, the pre-trained daytime model with `--checkpoint`, and the logging directory by `--experiment`. Model checkpoints and loggers will be saved under `./classification/checkpoints/{args.experiment}`.
 - Classification results will be saved in `./classification/results/{args.experiment}/log.txt`. You may also run ``python test.py`` to test the model.
 
@@ -53,13 +54,22 @@ Download the [CODaN dataset](https://github.com/Attila94/CIConv) and put it unde
 Download the [Cityscapes dataset](https://www.cityscapes-dataset.com/), [Nighttime Driving dataset](http://people.ee.ethz.ch/~daid/NightDriving/#), and [Dark Zurich dataset](https://www.trace.ethz.ch/publications/2019/GCMA_UIoU/). Put them under `./segmentation/data/`.
 
 #### Training
-- Navigate to `./darkening`, run `python darken_segmentation.py --sim` to train the darkening model with the $\mathcal{L}_D^{sim}$. Specify the pre-trained daytime model path with `--sim_model_dir`, the logging directory by `--experiment`, and models will be saved under `./darkening/checkpoints/{args.experiment}`.
+- Navigate to `./darkening`, run `python darken_segmentation.py --sim --experiment EXPERIMENT_NAME` to train the darkening model with the $\mathcal{L}_D^{sim}$. Specify the pre-trained daytime model path with `--sim_model_dir`, the logging directory by `--experiment`, and models will be saved under `./darkening/checkpoints/{args.experiment}`.
 - To save GPU memory, our implementation generates the darkened nighttime dataset in advance. Run python `darken_test.py` and specify the source daytime dataset path with `--src_path`, the darkening model path with `--experiment`, and the target nighttime dataset path with `--output_dir`. The darkened nighttime dataset will be saved under `--dst_path`. You may also download our pre-generated darkened nighttime dataset [here](https://disk.pku.edu.cn:443/link/6B3418BCC0876977E2A4A56CA5568C78).
 - Navigate to `./segmentation`, run `python train.py`. Specify the darkened dataset by `darken_dataset` and the logging directory by `--experiment`. Model checkpoints and loggers will be saved under `./segmentation/runs/{args.experiment}`.
 - Segmentation results will be saved in `./segmentation/runs/{args.experiment}/logs/`. You may also run ``python eval_test.py`` to obtain the visualization results and the zipped file for Dark Zurich evaluation.
 
 #### Pre-trained Models
 We provide the pre-trained models for image classification and semantic segmentation. You may download them [here](https://disk.pku.edu.cn:443/link/D12F2FAC207A60F4AB94197432B1032C).
+
+### Visual Place Recognition
+#### Dataset Preparation
+
+#### Training
+
+- Navigate to `./darkening` run `python darken_vpr.py` to train the darkening model with the $\mathcal{L}_D^{sim}$. Specify the pre-trained daytime model path with `--sim_model_dir`, the logging directory by `--experiment`, and models will be saved under `./darkening/checkpoints/{args.experiment}`.
+- Navigate to `./visual-place-recognition`, run `python3 -m cirtorch.examples.train_night EXPERIMENT_NAME --training-dataset 'retrieval-SfM-120k'  --test-datasets '247tokyo1k' --arch 'resnet101' --pool 'gem' --loss 'contrastive'  --loss-margin 0.85 --optimizer 'adam' --lr 5e-7 --neg-num 5 --query-size=22000 --pool-size=2000 --batch-size 5 --image-size 362 --epochs 5 --darkening_model PATH_TO_DARKENING_MODEL`. 
+- Model checkpoints and loggers will be saved under `./visual-place-recognition/checkpoints/EXPERIMENT_NAME`. Run `python3 -m cirtorch.examples.test --network-path PATH_TO_CHECKPOINT --datasets '247tokyo1k' --whitening 'retrieval-SfM-120k' --multiscale '[1, 1/2**(1/2), 1/2]'` to test the model.
 
 ## Citation
 If you find this work useful in your research, please consider citing:
