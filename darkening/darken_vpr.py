@@ -187,7 +187,7 @@ if __name__ == "__main__":
 
     # Input Parameters
     parser.add_argument('--lowlight_images_path', type=str,
-                        default="/mnt/netdisk/luord/datasets/retrieval/train/120k",
+                        default="../visual-place-recognition/dataset/train/120k",
                         )
     parser.add_argument('--lr', type=float, default=1e-4)
     parser.add_argument('--weight_decay', type=float, default=1e-4)

@@ -46,7 +46,7 @@ class TuplesDataset(data.Dataset):
 
         if name.startswith('retrieval-SfM'):
             # setting up paths
-            data_root = get_data_root()
+            data_root = '../retrieval'
             db_root = os.path.join(data_root, 'train', name)
             ims_root = os.path.join(db_root, 'ims')
 
