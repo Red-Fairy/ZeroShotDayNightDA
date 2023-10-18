@@ -30,15 +30,20 @@ For more information, please visit our [project website](https://red-fairy.githu
 Low-light conditions not only hamper human visual experience but also degrade the model's performance on downstream vision tasks. While existing works make remarkable progress on day-night domain adaptation, they rely heavily on domain knowledge derived from the task-specific nighttime dataset. This paper challenges a more complicated scenario with border applicability, *i.e.*, zero-shot day-night domain adaptation, which eliminates reliance on any nighttime data. Unlike prior zero-shot adaptation approaches emphasizing either image-level translation or model-level adaptation, we propose a similarity min-max paradigm that considers them under a unified framework. On the image level, we darken images towards minimum feature similarity to enlarge the domain gap. Then on the model level, we maximize the feature similarity between the darkened images and their normal-light counterparts for better model adaptation. To the best of our knowledge, this work represents the pioneering effort in jointly optimizing both aspects, resulting in a significant improvement of model generalizability. Extensive experiments demonstrate our method's effectiveness and broad applicability on various nighttime vision tasks, including classification, semantic segmentation, visual place recognition, and video action recognition.
 
 ## Updates
+<<<<<<< HEAD
 - 09/06/2023: Code for image classification and semantic segmentation is available now.
 - 10/18/2023: Code for visual place recognition is available now.
+=======
+- 09/05/2023: Code for image classification and semantic segmentation are available now.
+>>>>>>> 29f87fa90015d1a66a8c43882c6bf69e763f8ffb
 
 ## Code
 Code for image classification and semantic segmentation is available now. Code for visual place recognition and video action recognition will be released soon. 
 
 ### Requirements
-Environment: Pytorch with version >= 1.11.0 is required. Other requirements can be easily satisfied using `pip install`.
-GPU: 3 GPUs with at least 12GB memory (e.g., 2080Ti) are required.
+**Environment**: Pytorch with version >= 1.11.0 is required. Other requirements can be easily satisfied using `pip install`.
+
+**GPU**: 3 GPUs with at least 12GB memory (e.g., 2080Ti) are required.
 
 ### Image Classification
 #### Dataset Preparation
@@ -51,16 +56,16 @@ Download the [CODaN dataset](https://github.com/Attila94/CIConv) and put it unde
 
 ### Semantic Segmentation
 #### Dataset Preparation
-Download the [Cityscapes dataset](https://www.cityscapes-dataset.com/), [Nighttime Driving dataset](http://people.ee.ethz.ch/~daid/NightDriving/#), and [Dark Zurich dataset](https://www.trace.ethz.ch/publications/2019/GCMA_UIoU/). Put them under `./segmentation/data/`.
+We need three dataset for training and evaluation: [Cityscapes](https://www.cityscapes-dataset.com/), [Nighttime Driving](http://people.ee.ethz.ch/~daid/NightDriving/#), and [Dark Zurich](https://www.trace.ethz.ch/publications/2019/GCMA_UIoU/). Download and put them under `./segmentation/data/`.
 
 #### Training
 - Navigate to `./darkening`, run `python darken_segmentation.py --sim --experiment EXPERIMENT_NAME` to train the darkening model with the $\mathcal{L}_D^{sim}$. Specify the pre-trained daytime model path with `--sim_model_dir`, the logging directory by `--experiment`, and models will be saved under `./darkening/checkpoints/{args.experiment}`.
 - To save GPU memory, our implementation generates the darkened nighttime dataset in advance. Run python `darken_test.py` and specify the source daytime dataset path with `--src_path`, the darkening model path with `--experiment`, and the target nighttime dataset path with `--output_dir`. The darkened nighttime dataset will be saved under `--dst_path`. You may also download our pre-generated darkened nighttime dataset [here](https://disk.pku.edu.cn:443/link/6B3418BCC0876977E2A4A56CA5568C78).
-- Navigate to `./segmentation`, run `python train.py`. Specify the darkened dataset by `darken_dataset` and the logging directory by `--experiment`. Model checkpoints and loggers will be saved under `./segmentation/runs/{args.experiment}`.
+- Navigate to `./segmentation`, run `python train.py`. Specify the darkened dataset by `--darken_dataset` and the logging directory by `--experiment`. Model checkpoints and loggers will be saved under `./segmentation/runs/{args.experiment}`.
 - Segmentation results will be saved in `./segmentation/runs/{args.experiment}/logs/`. You may also run ``python eval_test.py`` to obtain the visualization results and the zipped file for Dark Zurich evaluation.
 
-#### Pre-trained Models
-We provide the pre-trained models for image classification and semantic segmentation. You may download them [here](https://disk.pku.edu.cn:443/link/D12F2FAC207A60F4AB94197432B1032C).
+### Pre-trained Models
+We provide the pre-trained models for image classification and semantic segmentation, as well as the corresponding darkening models. You may download them [here](https://disk.pku.edu.cn:443/link/D12F2FAC207A60F4AB94197432B1032C).
 
 ### Visual Place Recognition
 #### Dataset Preparation
@@ -83,4 +88,4 @@ If you find this work useful in your research, please consider citing:
 ```
 
 ## Acknowledgement
-Some code are borrowed from [CIConv](https://github.com/Attila94/CIConv). If you have any questions, please contact Rundong Luo [(rundongluo2002@gmail.com)](mailto:rundongluo2002@gmail.com) and or open an issue.
+Some code are borrowed from [CIConv](https://github.com/Attila94/CIConv). If you have any questions, please contact Rundong Luo [(rundongluo2002@gmail.com)](mailto:rundongluo2002@gmail.com) or open an issue.
