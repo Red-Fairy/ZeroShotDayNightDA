@@ -57,7 +57,7 @@ We need three dataset for training and evaluation: [Cityscapes](https://www.city
 
 #### Training
 - Navigate to `./darkening`, run `python darken_segmentation.py --sim --experiment EXPERIMENT_NAME` to train the darkening model with the $\mathcal{L}_D^{sim}$. Specify the pre-trained daytime model path with `--sim_model_dir`, the logging directory by `--experiment`, and models will be saved under `./darkening/checkpoints/{args.experiment}`.
-- To save GPU memory, our implementation generates the darkened nighttime dataset in advance. Run python `darken_test.py` and specify the source daytime dataset path with `--src_path`, the darkening model path with `--experiment`, and the target nighttime dataset path with `--output_dir`. The darkened nighttime dataset will be saved under `--dst_path`. You may also download our pre-generated darkened nighttime dataset [here](https://disk.pku.edu.cn:443/link/6B3418BCC0876977E2A4A56CA5568C78).
+- To save GPU memory, our implementation generates the darkened nighttime dataset in advance. Run python `darken_test.py` and specify the source daytime dataset path with `--src_path`, the darkening model path with `--experiment`, and the target nighttime dataset path with `--output_dir`. The darkened nighttime dataset will be saved under `--dst_path`. You may also download our pre-generated darkened nighttime dataset [here](https://drive.google.com/file/d/1b9KVLWpTpY1yVhA7j5nrcHPizZkgLz36/view?usp=sharing).
 - Navigate to `./segmentation`, run `python train.py`. Specify the darkened dataset by `--darken_dataset` and the logging directory by `--experiment`. Model checkpoints and loggers will be saved under `./segmentation/runs/{args.experiment}`.
 - Segmentation results will be saved in `./segmentation/runs/{args.experiment}/logs/`. You may also run ``python eval_test.py`` to obtain the visualization results and the zipped file for Dark Zurich evaluation.
 
@@ -82,7 +82,9 @@ We need three dataset for training and evaluation: [Cityscapes](https://www.city
 - Run `test.py --model-dir PATH_TO_CHECKPOINT` for evaluation.
 
 ### Pre-trained Models
-We provide the pre-trained models [here](https://disk.pku.edu.cn:443/link/D12F2FAC207A60F4AB94197432B1032C).
+We provide the pre-trained models [here](
+https://drive.google.com/file/d/1u11-dneYDenQNyKVVw6iStfkldfQxv6H/view?usp=drive_link).
+
 
 
 ## Citation
