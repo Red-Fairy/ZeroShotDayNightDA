@@ -82,8 +82,8 @@ We need three dataset for training and evaluation: [Cityscapes](https://www.city
 - Run `test.py --model-dir PATH_TO_CHECKPOINT` for evaluation.
 
 ### Pre-trained Models
-We provide the pre-trained models [here](
-https://drive.google.com/file/d/1u11-dneYDenQNyKVVw6iStfkldfQxv6H/view?usp=drive_link).
+We provide all the data and pre-trained models [here](
+https://drive.google.com/drive/folders/1E1BizpMh-G-eJVISHJ0mw8717ryAnul3?usp=sharing).
 
 
 
