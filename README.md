@@ -63,7 +63,7 @@ We need three dataset for training and evaluation: [Cityscapes](https://www.city
 
 ### Visual Place Recognition
 #### Dataset Preparation
-- Download the dataset from [here](http://www.ok.ctrl.titech.ac.jp/~torii/project/247/) and put it under `./visual-place-recognition/dataset/`. The training data will be stored in `./retrieval/train/retrieval-SfM-120k`.
+- Please modify the return value of the function `get_data_root` in `./visual-place-recognition/cirtorch/utils/general.py` to the path of the dataset. The datasets will be automatically downloaded and extracted. You may also download the dataset from [here](http://www.ok.ctrl.titech.ac.jp/~torii/project/247/) and put it under `./visual-place-recognition/dataset/`. The training data will be stored in `./retrieval/train/retrieval-SfM-120k`. 
 
 #### Training
 - Navigate to `./darkening` run `python darken_vpr.py` to train the darkening model with the $\mathcal{L}_D^{sim}$. Specify the pre-trained daytime model path with `--sim_model_dir`, the logging directory by `--experiment`, and models will be saved under `./darkening/checkpoints/{args.experiment}`.
