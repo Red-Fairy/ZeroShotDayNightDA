@@ -1,0 +1,11 @@
+0	Drink
+1	Jump
+2	Pick
+3	Pour
+4	Push
+5	Run
+6	Sit
+7	Stand
+8	Turn
+9	Walk
+10	Wave
