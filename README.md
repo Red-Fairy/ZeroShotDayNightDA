@@ -67,7 +67,7 @@ We need three dataset for training and evaluation: [Cityscapes](https://www.city
 
 #### Training
 - Navigate to `./darkening` run `python darken_vpr.py` to train the darkening model with the $\mathcal{L}_D^{sim}$. Specify the pre-trained daytime model path with `--sim_model_dir`, the logging directory by `--experiment`, and models will be saved under `./darkening/checkpoints/{args.experiment}`.
-- Navigate to `./visual-place-recognition`, run `python3 -m cirtorch.examples.train_night EXPERIMENT_NAME --training-dataset 'retrieval-SfM-120k'  --test-datasets '247tokyo1k' --arch 'resnet101' --pool 'gem' --loss 'contrastive'  --loss-margin 0.85 --optimizer 'adam' --lr 5e-7 --neg-num 5 --query-size=22000 --pool-size=2000 --batch-size 5 --image-size 362 --epochs 5 --darkening_model PATH_TO_DARKENING_MODEL`. 
+- Navigate to `./visual-place-recognition`, run `python3 -m cirtorch.examples.train_night EXPERIMENT_NAME --training-dataset 'retrieval-SfM-120k'  --test-datasets '247tokyo1k' --arch 'resnet101' --pool 'gem' --loss 'contrastive'  --loss-margin 0.85 --optimizer 'adam' --lr 5e-7 --neg-num 5 --query-size=22000 --pool-size=2000 --batch-size 5 --image-size 362 --epochs 5 --darkening_model PATH_TO_DARKENING_MODEL --sim`. 
 - Model checkpoints and loggers will be saved under `./visual-place-recognition/checkpoints/EXPERIMENT_NAME`. Run `python3 -m cirtorch.examples.test --network-path PATH_TO_CHECKPOINT --datasets '247tokyo1k' --whitening 'retrieval-SfM-120k' --multiscale '[1, 1/2**(1/2), 1/2]'` to test the model.
 
 ### Low-Light Action Recognition
@@ -77,7 +77,7 @@ We need three dataset for training and evaluation: [Cityscapes](https://www.city
 
 #### Training
 - Navigate to `./low-light-action-recognition`, run `python train_darkening.py --sim --experiment EXPERIMENT_NAME` to train the darkening model with the $\mathcal{L}_D^{sim}$. Specify the pre-trained daytime model path with `--feature_extractor` (download from our pretrained model link), the logging directory by `--experiment`, and models will be saved under `./low-light-action-recognition/checkpoints/{args.experiment}`.
-- Run `darken_video.py --darkening_model PATH_TO_DARKENING_MODEL`. The darkened videos will be saved under the specified directory (use `./dataset/NormalLight/raw/data_darken_test/` by default, otherwise you should also change the darkened data path under `./data/iterator_factory`).
+- Run `darken_video.py --darkening_model PATH_TO_DARKENING_MODEL --pretrained_model_path PATH_TO_DAYTIME_PRETRAINED_MODEL`. The darkened videos will be saved under the specified directory (use `./dataset/NormalLight/raw/data_darken_test/` by default, otherwise you should also change the darkened data path under `./data/iterator_factory`).
 - Run `train_night.py --model-dir SAVE_DIR --load_checkpoint PATH_TO_PRETRAINED_DAYTIME_MODEL`. Model checkpoints and loggers will be saved under `./low-light-action-recognition/checkpoints/{args.model_dir}`.
 - Run `test.py --model-dir PATH_TO_CHECKPOINT` for evaluation.
 

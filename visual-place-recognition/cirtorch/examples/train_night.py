@@ -137,9 +137,9 @@ parser.add_argument('--weight-decay', '--wd', default=1e-6, type=float,
 					metavar='W', help='weight decay (default: 1e-6)')
 parser.add_argument('--print-freq', default=10, type=int,
 					metavar='N', help='print frequency (default: 10)')
-parser.add_argument('--resume', default='/mnt/netdisk/luord/CVPR23/retrieval-modify/checkpoint/baseline-30-baseline-inpaper/model_epoch30.pth.tar', type=str, metavar='FILENAME',
-					help='adapt model from which checkpoint')
-parser.add_argument('--darkening_model', default='/mnt/netdisk/luord/CVPR23/Zero-DCE-modify/checkpoints_retrieval/scale0.95PixelReverseEst-w5/Iter15000.pth', type=str, metavar='FILENAME',
+parser.add_argument('--pretrained_model_path', type=str, metavar='FILENAME', default=None,
+					help='adapt model from which checkpoint, we use the weight of a daytime pre-trained model')
+parser.add_argument('--darkening_model', type=str, metavar='FILENAME', required=True,
 					help='path of darkening model')
 parser.add_argument('--noise_mode', type=str, default='pixel_patch')
 parser.add_argument('--noise_intensity', type=float, default=0.025)
@@ -162,26 +162,9 @@ def main():
 	download_train(get_data_root())
 	download_test(get_data_root())
 
-	# create export dir if it doesnt exist
-	# directory = "{}".format(args.training_dataset)
-	# directory += "_{}".format(args.arch)
-	# directory += "_{}".format(args.pool)
-	# if args.local_whitening:
-	#     directory += "_lwhiten"
-	# if args.regional:
-	#     directory += "_r"
-	# if args.whitening:
-	#     directory += "_whiten"
-	# if not args.pretrained:
-	#     directory += "_notpretrained"
-	# directory += "_{}_m{:.2f}".format(args.loss, args.loss_margin)
-	# directory += "_{}_lr{:.1e}_wd{:.1e}".format(args.optimizer, args.lr, args.weight_decay)
-	# directory += "_nnum{}_qsize{}_psize{}".format(args.neg_num, args.query_size, args.pool_size)
-	# directory += "_bsize{}_uevery{}_imsize{}".format(args.batch_size, args.update_every, args.image_size)
-
 	# args.directory = os.path.join(args.directory, directory)
 	# print(">> Creating directory if it does not exist:\n>> '{}'".format(args.directory))
-	args.directory = os.path.join('checkpoints', args.directory)
+	args.directory = os.path.join('checkpoint', args.directory)
 	if not os.path.exists(args.directory):
 		os.makedirs(args.directory)
 
@@ -261,17 +244,13 @@ def main():
 	elif args.optimizer == 'adam':
 		optimizer = torch.optim.Adam(parameters, args.lr, weight_decay=args.weight_decay)
 
-	# define learning rate decay schedule
-	# TODO: maybe pass as argument in future implementation?
-	exp_decay = math.exp(-0.01)
-	# scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=exp_decay)
-
-	# optionally resume from a checkpoint
+	# optionally pretrained_model_path from a checkpoint
 	start_epoch = 1
 	
-	checkpoint = torch.load(args.resume)
-	model.load_state_dict(checkpoint['state_dict'])
-	log.info(f'loaded checkpoint from {args.resume}')
+	if args.pretrained_model_path is not None:
+		checkpoint = torch.load(args.pretrained_model_path)
+		model.load_state_dict(checkpoint['state_dict'])
+		log.info(f'loaded checkpoint from {args.pretrained_model_path}')
 
 	# Data loading code
 	normalize = transforms.Normalize(mean=model.meta['mean'], std=model.meta['std'])
@@ -328,20 +307,9 @@ def main():
 		torch.manual_seed(epoch)
 		torch.cuda.manual_seed_all(epoch)
 
-		# # debug printing to check if everything ok
-		# lr_feat = optimizer.param_groups[0]['lr']
-		# lr_pool = optimizer.param_groups[1]['lr']
-		# print('>> Features lr: {:.2e}; Pooling lr: {:.2e}'.format(lr_feat, lr_pool))
-
 		# train for one epoch on train set
 		loss = train(train_loader, model, criterion, optimizer, epoch, darkening_model)
 		log.info(f'Train epoch: {epoch} loss: {loss}')
-
-		# evaluate on validation set
-		# if args.val:
-		#     with torch.no_grad():
-		#         loss = validate(val_loader, model, criterion, epoch)
-		#         log.info(f'Epoch: {epoch} - Validation loss: {loss:.4f}')
 
 		# evaluate on test datasets every test_freq epochs
 		if (epoch + 1) % args.test_freq == 0:
@@ -360,8 +328,6 @@ def main():
 			'min_loss': min_loss,
 			'optimizer' : optimizer.state_dict(),
 		}, is_best, args.directory)
-		
-		# scheduler.step()
 
 def train(train_loader, model, criterion, optimizer, epoch, darkening_model=None):
 	batch_time = AverageMeter()
@@ -415,25 +381,13 @@ def train(train_loader, model, criterion, optimizer, epoch, darkening_model=None
 				# compute output vector for image imi
 				output[:, imi] = model(input[q][imi].cuda()).squeeze()
 
-			# reducing memory consumption:
-			# compute loss for this query tuple only
-			# then, do backward pass for one tuple only
-			# each backward pass gradients will be accumulated
-			# the optimization step is performed for the full batch later
 			loss = criterion(output, target[q].cuda())
 			losses.update(loss.item())
 			loss.backward()
 
 		if (i + 1) % args.update_every == 0:
-			# do one step for multiple batches
-			# accumulated gradients are used
 			optimizer.step()
-			# zero out gradients so we can
-			# accumulate new ones over batches
 			optimizer.zero_grad()
-			# print('>> Train: [{0}][{1}/{2}]\t'
-			#       'Weight update performed'.format(
-			#        epoch+1, i+1, len(train_loader)))
 
 		# measure elapsed time
 		batch_time.update(time.time() - end)
@@ -473,8 +427,6 @@ def validate(val_loader, model, criterion, epoch):
 				# compute output vector for image imi of query q
 				output[:, q*ni + imi] = model(input[q][imi].cuda()).squeeze()
 
-		# no need to reduce memory consumption (no backward pass):
-		# compute loss for the full batch
 		loss = criterion(output, torch.cat(target).cuda())
 
 		# record loss
@@ -614,18 +566,7 @@ class AverageMeter(object):
 def set_batchnorm_eval(m):
 	classname = m.__class__.__name__
 	if classname.find('BatchNorm') != -1:
-		# freeze running mean and std:
-		# we do training one image at a time
-		# so the statistics would not be per batch
-		# hence we choose freezing (ie using imagenet statistics)
 		m.eval()
-		# # freeze parameters:
-		# # in fact no need to freeze scale and bias
-		# # they can be learned
-		# # that is why next two lines are commented
-		# for p in m.parameters():
-			# p.requires_grad = False
-
 
 if __name__ == '__main__':
 	main()
